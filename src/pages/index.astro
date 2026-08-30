@@ -21,6 +21,21 @@ const fmt = new Intl.DateTimeFormat('pt-BR', {
   <!-- ============ HERO ============ -->
   <section class="hero" aria-labelledby="hero-title">
     <img class="hero-bg" src="/posters/intro.jpg" alt="" aria-hidden="true" />
+    <!-- Vídeo de fundo: mostra o poster (mesma foto) até carregar; então vira animação.
+         Se não carregar (rede/device), a foto segue com Ken Burns. -->
+    <video
+      class="hero-video"
+      id="hero-video"
+      muted
+      loop
+      playsinline
+      preload="none"
+      poster="/posters/intro.jpg"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <source src="/videos/pedro3.mp4" type="video/mp4" />
+    </video>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="kicker hero-kicker hero-reveal">Conhecimento de tecnologia</p>
@@ -145,3 +160,37 @@ const fmt = new Intl.DateTimeFormat('pt-BR', {
   <!-- ============ INSCRIÇÃO ============ -->
   <SubscribeSection />
 </Layout>
+
+<script>
+  // Hero: a foto (poster/Ken Burns) fica visível até o vídeo de fundo carregar;
+  // então ele toca em loop e faz crossfade suave por cima. Se o autoplay for
+  // bloqueado ou o vídeo não carregar, a foto permanece — nada quebra.
+  const heroVideo = document.getElementById('hero-video');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (heroVideo && !reduceMotion) {
+    heroVideo.muted = true;
+    heroVideo.playsInline = true;
+    heroVideo.loop = true;
+
+    const tryPlay = () => {
+      const p = heroVideo.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    };
+
+    heroVideo.addEventListener('canplay', tryPlay, { once: true });
+    heroVideo.addEventListener('playing', () => {
+      heroVideo.classList.add('hero-video--playing');
+    });
+
+    // Vídeo é leve (~70KB): começa a baixar no load da página
+    heroVideo.preload = 'auto';
+    heroVideo.load();
+
+    // Fallback: se nada tocou em 8s (rede lenta/bloqueio), tenta de novo;
+    // se ainda falhar, a foto com Ken Burns continua como hoje.
+    window.setTimeout(() => {
+      if (heroVideo.paused && heroVideo.readyState >= 2) tryPlay();
+    }, 8000);
+  }
+</script>
