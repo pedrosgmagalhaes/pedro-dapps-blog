@@ -1,0 +1,16 @@
+---
+import { YOUTUBE_URL, MAIN_SITE_URL } from '../consts';
+
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <p class="footer-line">
+    IA<span class="gold">.</span> Cripto<span class="gold">.</span> Criação<span class="gold">.</span>
+  </p>
+  <nav class="footer-nav" aria-label="Links externos">
+    <a href={MAIN_SITE_URL} target="_blank" rel="noopener">pedrodapps.com</a>
+    <a href={YOUTUBE_URL} target="_blank" rel="noopener">YouTube</a>
+    <a href="/rss.xml">RSS</a>
+  </nav>
+  <p class="footer-copy">© {year} Pedro dApps · Inteligência Artificial e Blockchain</p>
+</footer>

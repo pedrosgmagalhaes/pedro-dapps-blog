@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+---
+<Layout title={post.data.title} description={post.data.description}>
+  <article class="post">
+    <header class="post-header">
+      <a class="back-link" href="/">← Todos os posts</a>
+      <p class="kicker">
+        {post.data.tags.length > 0
+          ? post.data.tags.map((t) => `#${t}`).join('  ')
+          : 'Pedro dApps'}
+      </p>
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="post-meta">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {fmt.format(post.data.pubDate)}
+        </time>
+        {post.data.updatedDate && (
+          <span class="post-updated">
+            · atualizado em {fmt.format(post.data.updatedDate)}
+          </span>
+        )}
+      </p>
+    </header>
+
+    {post.data.youtubeId && (
+      <div class="youtube-wrap">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${post.data.youtubeId}`}
+          title={`Vídeo: ${post.data.title}`}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <footer class="post-footer">
+      <a class="back-link" href="/">← Todos os posts</a>
+    </footer>
+  </article>
+</Layout>

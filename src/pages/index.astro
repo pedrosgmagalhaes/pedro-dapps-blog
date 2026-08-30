@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { SITE_DESCRIPTION } from '../consts';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const fmt = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+});
+---
+<Layout>
+  <section class="hero">
+    <p class="kicker">Blog oficial do canal</p>
+    <h1 class="hero-title">
+      IA<span class="gold">.</span><br />
+      Cripto<span class="gold">.</span><br />
+      Criação<span class="gold">.</span>
+    </h1>
+    <p class="hero-sub">{SITE_DESCRIPTION}</p>
+  </section>
+
+  <section class="posts" aria-label="Lista de posts">
+    <div class="section-head">
+      <h2 class="section-title">Últimos posts</h2>
+      <span class="section-count">{posts.length}</span>
+    </div>
+
+    <ol class="post-list">
+      {posts.map((post, i) => (
+        <li class="post-item">
+          <a class="post-link" href={`/posts/${post.id}/`}>
+            <span class="post-index">{String(i + 1).padStart(2, '0')}</span>
+            <span class="post-body">
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-meta">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {fmt.format(post.data.pubDate)}
+                </time>
+                {post.data.tags.length > 0 && (
+                  <span class="post-tags">{post.data.tags.map((t) => `#${t}`).join('  ')}</span>
+                )}
+              </span>
+            </span>
+            <span class="post-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+</Layout>
