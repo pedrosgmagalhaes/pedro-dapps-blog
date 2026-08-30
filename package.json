@@ -11,5 +11,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "start": "node server.js"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.9",
+    "sirv": "^3.0.2"
   }
 }
