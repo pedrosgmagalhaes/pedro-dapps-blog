@@ -268,42 +268,6 @@ body.is-loading {
 }
 
 /* ============================================================
-   CURSOR CUSTOMIZADO
-   ============================================================ */
-.scroll-cursor {
-  --cursor-size: 3rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 4000;
-  width: var(--cursor-size);
-  height: var(--cursor-size);
-  border: 1px solid rgba(var(--accent-rgb), 0.75);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(calc(var(--cursor-x, -120px) - 50%), calc(var(--cursor-y, -120px) - 50%));
-  opacity: 0;
-  transition: opacity 0.3s ease, width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-  mix-blend-mode: difference;
-}
-
-body.cursor-ready .scroll-cursor {
-  opacity: 1;
-}
-
-body.cursor-link .scroll-cursor {
-  width: calc(var(--cursor-size) * 1.9);
-  height: calc(var(--cursor-size) * 1.9);
-  background: rgba(var(--accent-rgb), 0.08);
-}
-
-@media (max-width: 900px), (pointer: coarse) {
-  .scroll-cursor {
-    display: none;
-  }
-}
-
-/* ============================================================
    HEADER
    ============================================================ */
 .site-header {
@@ -510,8 +474,8 @@ body.cursor-link .scroll-cursor {
 .hero-title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(3.6rem, 12vw, 8.5rem);
-  line-height: 0.9;
+  font-size: clamp(3rem, 11vw, 8.5rem);
+  line-height: 0.92;
   text-transform: uppercase;
   letter-spacing: 0.01em;
   margin: 0 0 1.6rem;

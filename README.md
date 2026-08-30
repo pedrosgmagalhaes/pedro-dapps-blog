@@ -1,9 +1,11 @@
 # Pedro dApps — Blog
 
-Blog oficial do canal **Pedro dApps** (Inteligência Artificial + Blockchain), construído com
-[Astro](https://astro.build/). Mantém a identidade visual completa do site principal:
-tema escuro, fontes **Anton + Manrope + Playfair Display**, grão cinematográfico,
-preloader VU-meter, Ken Burns, cursor customizado, logo, favicons e botão de inscrição.
+Blog de **conhecimentos gerais de tecnologia** do Pedro dApps — Inteligência Artificial,
+Blockchain, Web3, programação, segurança e muito mais — construído com [Astro](https://astro.build/).
+Mantém a identidade visual do site principal: tema escuro, fontes **Anton + Manrope +
+Playfair Display**, grão cinematográfico, preloader VU-meter, Ken Burns, logo, favicons e
+botão de inscrição. O objetivo do blog é centralizar conteúdo de qualidade para ganhar
+tráfego orgânico (SEO) — quanto mais abrangente, melhor.
 
 ## 🌐 Rotas (duas URLs servindo o mesmo blog)
 

@@ -9,7 +9,7 @@ export async function GET(context) {
   return rss({
     title: 'Pedro dApps — Blog',
     description:
-      'Inteligência Artificial e Blockchain: bastidores, análises e experimentos do canal Pedro dApps.',
+      'Conhecimentos gerais de tecnologia: Inteligência Artificial, Blockchain, Web3, programação, segurança e muito mais.',
     site: context.site,
     items: posts.map((post) => ({
       title: post.data.title,

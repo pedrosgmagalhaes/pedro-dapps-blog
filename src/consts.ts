@@ -1,6 +1,6 @@
 export const SITE_TITLE = 'Pedro dApps — Blog';
 export const SITE_DESCRIPTION =
-  'Inteligência Artificial e Blockchain: bastidores, análises e experimentos do canal Pedro dApps.';
+  'Conhecimentos gerais de tecnologia: Inteligência Artificial, Blockchain, Web3, programação, segurança e muito mais — explicados de forma direta e prática.';
 export const AUTHOR = 'Pedro Magalhães';
 export const YOUTUBE_URL = 'https://www.youtube.com/@pedro_dapps';
 export const MAIN_SITE_URL = 'https://pedrodapps.com';
@@ -30,6 +30,7 @@ export const TAGLINE_WORDS = [
   'Negócios',
   'IA',
   'Blockchain',
-  'Cripto',
-  'Criação',
+  'Web3',
+  'Programação',
+  'Segurança',
 ];

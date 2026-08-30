@@ -9,7 +9,6 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasGsap = typeof window.gsap !== 'undefined';
   const body = document.body;
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* ---------- 1. Preloader (VU-meter, igual ao site oficial) ---------- */
   const preloader = document.querySelector('.preloader');
@@ -128,53 +127,7 @@
     body.classList.remove('is-loading');
   }
 
-  /* ---------- 2. Cursor customizado ---------- */
-  const scrollCursor = document.querySelector('.scroll-cursor');
-  if (scrollCursor && finePointer) {
-    const cursorPosition = { currentX: -120, currentY: -120, targetX: -120, targetY: -120 };
-    const interactiveSelector = 'a, button, [role="button"], input, select, textarea, label, summary';
-
-    const renderCursor = () => {
-      const ease = reducedMotion ? 1 : 0.2;
-      cursorPosition.currentX += (cursorPosition.targetX - cursorPosition.currentX) * ease;
-      cursorPosition.currentY += (cursorPosition.targetY - cursorPosition.currentY) * ease;
-      scrollCursor.style.setProperty('--cursor-x', `${cursorPosition.currentX}px`);
-      scrollCursor.style.setProperty('--cursor-y', `${cursorPosition.currentY}px`);
-      requestAnimationFrame(renderCursor);
-    };
-
-    window.addEventListener('pointermove', (event) => {
-      if (event.pointerType && event.pointerType !== 'mouse') return;
-      cursorPosition.targetX = event.clientX;
-      cursorPosition.targetY = event.clientY;
-      if (reducedMotion) {
-        cursorPosition.currentX = event.clientX;
-        cursorPosition.currentY = event.clientY;
-      }
-      body.classList.add('cursor-ready');
-    }, { passive: true });
-
-    document.documentElement.addEventListener('mouseleave', () => {
-      body.classList.remove('cursor-ready', 'cursor-link');
-    });
-
-    document.addEventListener('pointerover', (event) => {
-      if (event.pointerType && event.pointerType !== 'mouse') return;
-      body.classList.toggle('cursor-link', Boolean(event.target.closest(interactiveSelector)));
-    }, { passive: true });
-    document.addEventListener('pointerout', (event) => {
-      if (event.pointerType && event.pointerType !== 'mouse') return;
-      const nextTarget = event.relatedTarget;
-      body.classList.toggle(
-        'cursor-link',
-        nextTarget instanceof Element && Boolean(nextTarget.closest(interactiveSelector)),
-      );
-    }, { passive: true });
-
-    requestAnimationFrame(renderCursor);
-  }
-
-  /* ---------- 3. Tagline rotativa (estilo "Breathing") ---------- */
+  /* ---------- 2. Tagline rotativa (estilo "Breathing") ---------- */
   const taglineWord = document.querySelector('.tagline-word');
   if (taglineWord && typeof window.BLOG_TAGLINE_WORDS !== 'undefined') {
     const words = window.BLOG_TAGLINE_WORDS;
@@ -194,7 +147,7 @@
     }
   }
 
-  /* ---------- 4. Reveals on-scroll ---------- */
+  /* ---------- 3. Reveals on-scroll ---------- */
   const revealElements = Array.from(document.querySelectorAll('[data-reveal]'));
   if (revealElements.length) {
     if (reducedMotion || typeof IntersectionObserver === 'undefined') {
@@ -215,7 +168,7 @@
     }
   }
 
-  /* ---------- 5. Header: vidro ao rolar ---------- */
+  /* ---------- 4. Header: vidro ao rolar ---------- */
   const header = document.querySelector('.site-header');
   if (header) {
     const onScroll = () => {
@@ -225,7 +178,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  /* ---------- 6. Ano dinâmico no rodapé ---------- */
+  /* ---------- 5. Ano dinâmico no rodapé ---------- */
   document.querySelectorAll('[data-year]').forEach((el) => {
     el.textContent = String(new Date().getFullYear());
   });
