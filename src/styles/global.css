@@ -702,6 +702,12 @@ body.is-loading {
   gap: 1.2rem;
 }
 
+/* Sem cards de vídeo: apenas o card do canal, centralizado */
+.videos-grid--solo {
+  grid-template-columns: 1fr;
+  max-width: 42rem;
+}
+
 .video-card {
   display: flex;
   gap: 1rem;

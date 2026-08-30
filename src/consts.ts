@@ -13,15 +13,9 @@ export const EMAIL = 'pedro@pedrodapps.com';
 export const FEATURED_YOUTUBE_ID = '';
 
 // Cards de vídeos do canal (thumbnails reais via i.ytimg.com).
-// Adicione novos vídeos seguindo o mesmo formato.
-export const VIDEOS: { id: string; title: string; sub: string; badge: string }[] = [
-  {
-    id: 'P3rClnqhBBo',
-    title: 'NearX — entrevista em vídeo',
-    sub: 'Uma conversa longa sobre o Real Digital (Drex), o futuro do dinheiro e a análise do código-fonte.',
-    badge: 'YouTube · Entrevista',
-  },
-];
+// Adicione vídeos reais do canal seguindo o formato:
+// { id: 'ID_DO_VIDEO', title: 'Título', sub: 'Descrição curta', badge: 'YouTube · Tema' }
+export const VIDEOS: { id: string; title: string; sub: string; badge: string }[] = [];
 
 // Palavras rotativas da tagline do hero (estilo "Breathing Technology" do site oficial)
 export const TAGLINE_WORDS = [

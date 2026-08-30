@@ -8,6 +8,8 @@ const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
+const hasVideos = VIDEOS.length > 0;
+
 const fmt = new Intl.DateTimeFormat('pt-BR', {
   day: '2-digit',
   month: 'short',
@@ -82,7 +84,7 @@ const fmt = new Intl.DateTimeFormat('pt-BR', {
       <div class="section-head" data-reveal>
         <h2 class="section-title">Do canal no <span class="gold">YouTube</span></h2>
       </div>
-      <div class="videos-grid">
+      <div class="videos-grid {hasVideos ? '' : 'videos-grid--solo'}">
         <div class="channel-card" data-reveal>
           <div class="channel-head">
             <span class="channel-avatar">
