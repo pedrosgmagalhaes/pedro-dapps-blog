@@ -58,8 +58,13 @@ const fmt = new Intl.DateTimeFormat('pt-BR', {
     <ol class="post-list">
       {posts.map((post, i) => (
         <li class="post-item" data-reveal style={`--reveal-delay: ${Math.min(i * 60, 240)}ms`}>
-          <a class="post-link" href={`/posts/${post.id}/`}>
+          <a class={`post-link${post.data.cover ? ' post-link--thumb' : ''}`} href={`/posts/${post.id}/`}>
             <span class="post-index">{String(i + 1).padStart(2, '0')}</span>
+            {post.data.cover && (
+              <span class="post-thumb">
+                <img src={post.data.cover} alt="" loading="lazy" draggable="false" />
+              </span>
+            )}
             <span class="post-body">
               <span class="post-title">{post.data.title}</span>
               <span class="post-meta">

@@ -12,10 +12,8 @@
    3. Corrige canonical / og:url / og:image / sitemap para /blog.
    ============================================================ */
 
-// ORIGEM do blog — preencher com a URL real após o deploy no Railway.
-// Pode ser o domínio https://blog.pedrodapps.com (após custom domain)
-// ou a URL direta https://<servico>.up.railway.app.
-const ORIGIN = 'https://BLOG.ORIGEM.AQUI';
+// ORIGEM do blog — aponta para o subdomínio definitivo (após custom domain no Railway).
+const ORIGIN = 'https://blog.pedrodapps.com';
 
 const PREFIX = '/blog';
 const SITE_ROOT = 'https://pedrodapps.com';
@@ -73,10 +71,33 @@ export default {
     }
 
     const originUrl = ORIGIN + url.pathname + url.search;
-    const upstream = await fetch(originUrl, {
-      headers: { 'User-Agent': request.headers.get('user-agent') || '' },
-      redirect: 'follow',
-    });
+    let upstream;
+    try {
+      upstream = await fetch(originUrl, {
+        headers: { 'User-Agent': request.headers.get('user-agent') || '' },
+        redirect: 'follow',
+      });
+    } catch (err) {
+      // Blog ainda não está no ar (aguardando deploy) — página elegante de "em breve"
+      return new Response(
+        `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedro dApps — Blog</title>
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#080808;color:#f4f4f1;font-family:ui-sans-serif,system-ui,sans-serif;text-align:center}
+  .wrap{padding:2rem}.k{color:#c89b52;font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;margin-bottom:1rem}
+  h1{font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(2.2rem,8vw,4rem);text-transform:uppercase;margin:0 0 1rem;line-height:.95}
+  .gold{color:#c89b52}p{color:rgba(244,244,241,.66);max-width:32rem;margin:0 auto 1.6rem;line-height:1.7}
+  a{color:#c89b52;text-decoration:none;border:1px solid rgba(200,155,82,.5);padding:.7rem 1.4rem;border-radius:999px;display:inline-block;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.85rem}
+</style></head><body><div class="wrap">
+<p class="k">Pedro dApps · Tecnologia</p>
+<h1>IA<span class="gold">.</span> Blockchain<span class="gold">.</span> Criação<span class="gold">.</span></h1>
+<p>O blog está sendo publicado. Volte em instantes — os primeiros posts já estão a caminho.</p>
+<a href="https://pedrodapps.com">Site oficial</a>
+</div></body></html>`,
+        { status: 503, headers: { 'content-type': 'text/html; charset=utf-8', 'retry-after': '300' } },
+      );
+    }
 
     const contentType = upstream.headers.get('content-type') || '';
     const base = contentType.split(';')[0].trim();
