@@ -1,7 +1,7 @@
 ---
 title: "Banco Central explica por que, às vezes, é preciso 'frear a inovação' nas criptomoedas"
 description: "Nagel Paulino, do Banco Central, falou no Blockchain Rio sobre por que a regulação de cripto precisa acompanhar o crescimento do setor — e o que o BC observa nas stablecoins."
-pubDate: 2026-08-30
+pubDate: 2026-08-12
 tags: ["cripto", "blockchain", "regulação", "brasil"]
 cover: "/images/news/bc-cripto-frear-inovacao.jpg"
 ---
