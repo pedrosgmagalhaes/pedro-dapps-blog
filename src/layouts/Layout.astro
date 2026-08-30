@@ -2,7 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Preloader from '../components/Preloader.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, TAGLINE_WORDS } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, TAGLINE_WORDS, NEWSLETTER_API, VAPID_PUBLIC_KEY } from '../consts';
 import '../styles/global.css';
 
 interface Props {
@@ -87,6 +87,11 @@ const ogImageUrl = new URL(ogImage ?? '/og-thumbnail.png', Astro.site);
     </main>
     <Footer />
     <script>import '../scripts/blog.js';</script>
+    <script is:inline define:vars={{ newsletterApi: NEWSLETTER_API, vapidPublicKey: VAPID_PUBLIC_KEY }}>
+      window.NEWSLETTER_API = newsletterApi;
+      window.VAPID_PUBLIC_KEY = vapidPublicKey;
+    </script>
+    <script>import '../scripts/subscribe.js';</script>
     <noscript>
       <style>
         .preloader,

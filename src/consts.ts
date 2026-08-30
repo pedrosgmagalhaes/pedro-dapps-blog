@@ -8,6 +8,14 @@ export const GITHUB_URL = 'https://github.com/pedrosgmagalhaes';
 export const TWITTER_URL = 'https://x.com/pedro_dapps';
 export const EMAIL = 'pedro@pedrodapps.com';
 
+// API de notificações (Worker do Cloudflare + D1)
+export const NEWSLETTER_API = 'https://blog-api.pedrodapps.com';
+// Chave pública VAPID para Web Push (a privada fica como secret no Worker)
+export const VAPID_PUBLIC_KEY =
+  'BIPynlrRsr8e43rQ7K73cC3trBTHaVzq5V1ZaI6LJorf6NjFzvshg-q0X-2qk3GzYQ4PDxpFjHF8NqWTesKtKcE';
+// Remetente das notificações por e-mail
+export const NOTIFY_EMAIL = 'noticias@pedrodapps.com';
+
 // ID de um vídeo real do canal para o "vídeo em destaque" (vazio = bloco oculto).
 // Pegue o ID na URL do YouTube: https://www.youtube.com/watch?v=XXXX
 export const FEATURED_YOUTUBE_ID = '';

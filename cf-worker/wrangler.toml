@@ -1,0 +1,30 @@
+# ============================================================
+# Pedro dApps Blog — Worker de Notificações (Cloudflare)
+# Deploy: npx wrangler deploy (na pasta cf-worker/)
+# Requer env: CLOUDFLARE_API_TOKEN (com permissão Workers), CLOUDFLARE_ACCOUNT_ID
+# ============================================================
+name = "blog-newsletter"
+main = "newsletter-worker.js"
+compatibility_date = "2025-01-01"
+
+# Rota: blog-api.pedrodapps.com → este Worker
+routes = [{ pattern = "blog-api.pedrodapps.com/*" }]
+
+# Notifica automaticamente (push + e-mail) quando o RSS muda
+[triggers]
+crons = ["*/20 * * * *"]
+
+[vars]
+VAPID_PUBLIC_KEY = "BIPynlrRsr8e43rQ7K73cC3trBTHaVzq5V1ZaI6LJorf6NjFzvshg-q0X-2qk3GzYQ4PDxpFjHF8NqWTesKtKcE"
+BLOG_ORIGIN = "https://blog.pedrodapps.com"
+NOTIFY_FROM = "noticias@pedrodapps.com"
+
+# Banco D1 (criado via: npx wrangler d1 create blog-newsletter-db)
+[[d1_databases]]
+binding = "DB"
+database_name = "blog-newsletter-db"
+database_id = "42e571f7-c686-4ba5-b168-bb4d5cd45829"
+
+# Segredos (definidos via: npx wrangler secret put NOME):
+#   VAPID_PRIVATE_KEY  — chave privada VAPID (web push)
+#   NOTIFY_SECRET      — token para disparo manual (push/notify, newsletter/send)

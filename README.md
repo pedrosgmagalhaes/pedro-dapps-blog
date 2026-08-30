@@ -72,6 +72,30 @@ tags: ["IA", "blockchain"]
 
 O slug (URL) é derivado do nome do arquivo: `meu-novo-post.md` → `/posts/meu-novo-post/`.
 
+> ⚡ **Quando um post novo vai ao ar**, o sistema de notificações dispara sozinho:
+> o cron do Worker (`*/20 * * * *`) detecta a mudança no RSS e envia **Web Push**
+> + **newsletter por e-mail** para os inscritos. Basta publicar.
+
+## 🔔 Inscrições e notificações (nativo, sem serviços externos)
+
+O blog tem **dois canais de inscrição nativos** (seção "Fique por dentro"):
+
+| Canal | Como funciona | Infra |
+|---|---|---|
+| **Web Push** | Botão "Ativar notificações" → notificação do navegador com o título do post novo | Service Worker (`public/sw.js`) + Worker `blog-newsletter` + D1 |
+| **Newsletter e-mail** | Formulário de e-mail → aviso por e-mail quando sair post novo | Worker `blog-newsletter` + MailChannels (envio) + D1 |
+
+- **API:** `https://blog-api.pedrodapps.com` (rota do Worker no Cloudflare).
+- **Banco D1:** `blog-newsletter-db` (tabelas `emails`, `push_subs`, `kv`).
+- **Disparo manual** (se quiser notificar sem esperar o cron):
+  `curl -X POST https://blog-api.pedrodapps.com/api/push/notify -H "Authorization: Bearer <NOTIFY_SECRET>"`
+  (e o equivalente para `/api/newsletter/send`).
+- **Deploy do Worker:** na pasta `cf-worker/` → `npx wrangler deploy`
+  (token precisa de permissão de Workers; DNS já usa o MCP Cloudflare).
+- **Verificação de envio:** TXT `_mailchannels` já criados em `pedrodapps.com`.
+  Se o primeiro e-mail não sair, confirme a verificação em
+  https://support.mailchannels.com/hc/en-us/articles/... (verificação única com captcha).
+
 ### Vídeos do canal (home)
 
 Edite `src/consts.ts`:
