@@ -153,6 +153,10 @@
     if (reducedMotion || typeof IntersectionObserver === 'undefined') {
       revealElements.forEach((el) => el.classList.add('is-in'));
     } else {
+      // threshold 0 (em vez de 0.12): elementos muito altos (ex.: .prose num
+      // post, ~8x a altura da viewport no mobile) nunca atingiriam 12% de
+      // visibilidade e o texto ficaria invisível. Com threshold 0, o reveal
+      // dispara assim que qualquer parte do elemento entra no viewport.
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -162,7 +166,7 @@
             }
           });
         },
-        { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        { threshold: 0, rootMargin: '0px 0px -8% 0px' },
       );
       revealElements.forEach((el) => observer.observe(el));
     }
