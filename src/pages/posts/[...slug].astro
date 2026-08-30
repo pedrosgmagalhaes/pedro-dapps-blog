@@ -21,7 +21,11 @@ const fmt = new Intl.DateTimeFormat('pt-BR', {
   timeZone: 'UTC',
 });
 ---
-<Layout title={post.data.title} description={post.data.description}>
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  ogImage={post.data.cover ?? '/og-thumbnail.png'}
+>
   <article class="post">
     <header class="post-header" data-reveal>
       <a class="back-link" href="/">← Todos os posts</a>

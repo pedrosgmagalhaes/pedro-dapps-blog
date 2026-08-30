@@ -76,8 +76,6 @@ Paulino apontou solidez regulatória, controles e mecanismos de prevenção à l
 
 A fala do BC confirma uma tendência que já vinha se desenhando: cripto deixou de ser tratada como exceção e passou a ser enquadrada como parte do sistema financeiro — com as mesmas cobranças de governança, proteção e prevenção que valem para os demais agentes. Para quem acompanha o tema, o sinal é claro: a regulação vai continuar mudando, e as stablecoins são o próximo capítulo.
 
-Leia também: [O que é o Drex e por que ele importa](/posts/o-que-e-o-drex-e-por-que-ele-importa/)
-
 ---
 
 > Fonte: [Cointelegraph Brasil](https://cointelegraph.com.br/news/brazilian-central-bank-blockchain)
