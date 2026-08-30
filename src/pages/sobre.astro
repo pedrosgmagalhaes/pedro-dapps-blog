@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SubscribeSection from '../components/SubscribeSection.astro';
+import { AUTHOR, YOUTUBE_URL, GITHUB_URL, TWITTER_URL, MAIN_SITE_URL } from '../consts';
+---
+<Layout
+  title="Sobre"
+  description={`Sobre ${AUTHOR} — criador do canal Pedro dApps: Inteligência Artificial, Blockchain, Web3, programação e segurança explicadas de forma direta.`}
+>
+  <section class="posts" id="sobre">
+    <div class="section-head" data-reveal>
+      <h1 class="section-title">
+        Sobre <span class="gold">{AUTHOR}</span>
+      </h1>
+    </div>
+
+    <div class="prose about-prose" data-reveal>
+      <p>
+        Eu sou o Pedro, criador do canal <strong>Pedro dApps</strong> — conteúdo direto e
+        prático sobre Inteligência Artificial, Blockchain, Web3, programação e segurança.
+        A ideia é simples: tecnologia explicada sem enrolação, tanto no
+        <a href={YOUTUBE_URL} target="_blank" rel="noopener">YouTube</a> quanto aqui no blog.
+      </p>
+      <p>
+        Antes do canal, ganhei projeção no meio cripto ao analisar publicamente o
+        código-fonte do <strong>Real Digital (Drex)</strong>, o piloto do CBDC brasileiro.
+        A análise — que revelou funcionalidades como congelamento de carteiras e redução
+        de saldos no código da plataforma — foi confirmada pelo Banco Central e repercutiu
+        na imprensa internacional (LegitimCrypto, The Markets Cafe, CoinsNews e Gazeta do Povo).
+      </p>
+      <p>
+        Neste blog, você encontra análises de mercado, notícias comentadas de IA e cripto,
+        tutoriais e o que mais for útil para quem quer entender — e usar — essas tecnologias.
+      </p>
+      <ul class="about-links">
+        <li><a href={MAIN_SITE_URL} target="_blank" rel="noopener">Site oficial — pedrodapps.com</a></li>
+        <li><a href={YOUTUBE_URL} target="_blank" rel="noopener">YouTube — @pedro_dapps</a></li>
+        <li><a href={GITHUB_URL} target="_blank" rel="noopener">GitHub — pedrosgmagalhaes</a></li>
+        <li><a href={TWITTER_URL} target="_blank" rel="noopener">X — @pedro_dapps</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <SubscribeSection />
+</Layout>
+
+<style>
+  .about-prose {
+    max-width: 46rem;
+  }
+  .about-links {
+    margin-top: 1.5rem;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .about-links a {
+    color: var(--gold, #c89b52);
+    text-decoration: none;
+  }
+  .about-links a:hover {
+    text-decoration: underline;
+  }
+</style>

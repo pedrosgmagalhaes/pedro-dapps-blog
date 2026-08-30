@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { YOUTUBE_URL } from '../../consts';
+import { YOUTUBE_URL, AUTHOR } from '../../consts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -20,11 +20,58 @@ const fmt = new Intl.DateTimeFormat('pt-BR', {
   year: 'numeric',
   timeZone: 'UTC',
 });
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = post.data.cover ?? '/og-thumbnail.png';
+const ogImageUrl = new URL(ogImage, Astro.site);
+const coverAlt = post.data.cover ? `Capa do post: ${post.data.title}` : '';
+const datePublished = post.data.pubDate.toISOString();
+const dateModified = (post.data.updatedDate ?? post.data.pubDate).toISOString();
+const keywords = post.data.tags.join(', ');
+
+// Dados estruturados: BlogPosting + BreadcrumbList (rich snippets no Google)
+const blogPosting = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  image: ogImageUrl.toString(),
+  datePublished,
+  dateModified,
+  inLanguage: 'pt-BR',
+  keywords,
+  mainEntityOfPage: canonical.toString(),
+  author: {
+    '@type': 'Person',
+    name: AUTHOR,
+    url: new URL('/sobre/', Astro.site).toString(),
+    sameAs: ['https://www.youtube.com/@pedro_dapps', 'https://x.com/pedro_dapps', 'https://github.com/pedrosgmagalhaes'],
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Pedro dApps',
+    url: 'https://pedrodapps.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/images/pedrodapps_logo.png', Astro.site).toString(),
+    },
+  },
+};
+
+const breadcrumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Blog', item: new URL('/', Astro.site).toString() },
+    { '@type': 'ListItem', position: 2, name: post.data.title, item: canonical.toString() },
+  ],
+};
 ---
 <Layout
   title={post.data.title}
   description={post.data.description}
-  ogImage={post.data.cover ?? '/og-thumbnail.png'}
+  ogImage={ogImage}
+  jsonLd={[blogPosting, breadcrumbs]}
 >
   <article class="post">
     <header class="post-header" data-reveal>
@@ -44,12 +91,13 @@ const fmt = new Intl.DateTimeFormat('pt-BR', {
             · atualizado em {fmt.format(post.data.updatedDate)}
           </span>
         )}
+        · por <a class="post-author" href="/sobre/">{AUTHOR}</a>
       </p>
     </header>
 
     {post.data.cover && (
       <figure class="post-cover" data-reveal>
-        <img src={post.data.cover} alt="" loading="eager" />
+        <img src={post.data.cover} alt={coverAlt} loading="eager" />
       </figure>
     )}
 

@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { MAIN_SITE_URL } from '../consts';
+---
+<Layout title="Página não encontrada" description="404 — a página que você procura não existe no blog Pedro dApps.">
+  <section class="hero" style="min-height: 70vh">
+    <div class="hero-inner" style="text-align: center">
+      <p class="kicker hero-kicker">Erro 404</p>
+      <h1 class="hero-title">
+        <span class="line">Não <span class="gold">encontrei.</span></span>
+        <span class="line">Mas a <span class="gold">curiosidade</span> continua.</span>
+      </h1>
+      <p class="hero-tagline">
+        A página pode ter mudado de endereço ou nunca ter existido. Volte para o início e
+        explore os posts sobre IA, Blockchain, Web3 e programação.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn--accent" href="/">Ir para o blog</a>
+        <a class="btn btn--ghost" href={MAIN_SITE_URL} target="_blank" rel="noopener">Site oficial</a>
+      </div>
+    </div>
+  </section>
+</Layout>

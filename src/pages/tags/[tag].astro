@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SubscribeSection from '../../components/SubscribeSection.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort((a, b) =>
+    a.localeCompare(b, 'pt-BR'),
+  );
+  return tags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((p) => p.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+
+const fmt = new Intl.DateTimeFormat('pt-BR', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+
+const pageTitle = `#${tag}`;
+const pageDescription = `Posts sobre ${tag} no blog Pedro dApps — tecnologia explicada de forma direta e prática.`;
+---
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="posts" id="posts" aria-label={`Posts sobre ${tag}`}>
+    <div class="section-head" data-reveal>
+      <h1 class="section-title">
+        #<span class="gold">{tag}</span>
+      </h1>
+      <span class="section-count">{posts.length}</span>
+    </div>
+    <p class="section-sub" data-reveal>{pageDescription}</p>
+
+    <ol class="post-list">
+      {posts.map((post, i) => (
+        <li class="post-item" data-reveal style={`--reveal-delay: ${Math.min(i * 60, 240)}ms`}>
+          <a class={`post-link${post.data.cover ? ' post-link--thumb' : ''}`} href={`/posts/${post.id}/`}>
+            <span class="post-index">{String(i + 1).padStart(2, '0')}</span>
+            {post.data.cover && (
+              <span class="post-thumb">
+                <img src={post.data.cover} alt={`Capa do post: ${post.data.title}`} loading="lazy" draggable="false" />
+              </span>
+            )}
+            <span class="post-body">
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-meta">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {fmt.format(post.data.pubDate)}
+                </time>
+                {post.data.tags.length > 0 && (
+                  <span class="post-tags">{post.data.tags.map((t) => `#${t}`).join('  ')}</span>
+                )}
+              </span>
+            </span>
+            <span class="post-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <SubscribeSection />
+</Layout>
