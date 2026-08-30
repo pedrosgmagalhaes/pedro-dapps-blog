@@ -2,15 +2,35 @@
 import { YOUTUBE_URL, MAIN_SITE_URL } from '../consts';
 
 const current = Astro.url.pathname;
+const isHome = current === '/' || current === '/blog/';
 ---
 <header class="site-header">
-  <a class="brand" href="/" aria-label="Pedro dApps — Blog">
-    Pedro<span class="brand-gold">·</span>dApps
-    <span class="brand-tag">Blog</span>
+  <a class="brand" href="/" aria-label="Pedro dApps — Blog, início">
+    <span class="brand-mark">
+      <img src="/images/pedrodapps_logo.png" alt="" width="42" height="42" draggable="false" />
+    </span>
+    <span class="brand-type">
+      <span class="brand-name">Pedro <em>dApps</em></span>
+      <span class="brand-rule" aria-hidden="true"></span>
+    </span>
   </a>
+
   <nav class="nav" aria-label="Navegação principal">
-    <a class="nav-link" href="/" aria-current={current === '/' ? 'page' : undefined}>Blog</a>
-    <a class="nav-link" href={MAIN_SITE_URL} target="_blank" rel="noopener">Site</a>
+    <a class="nav-link" href="/" aria-current={isHome ? 'page' : undefined}>Blog</a>
+    <a class="nav-link nav-link--site" href={MAIN_SITE_URL} target="_blank" rel="noopener">Site</a>
     <a class="nav-link" href={YOUTUBE_URL} target="_blank" rel="noopener">YouTube ↗</a>
+    <a
+      class="subscribe-button"
+      href={YOUTUBE_URL}
+      target="_blank"
+      rel="noopener"
+      aria-label="Inscrever-se no canal Pedro dApps no YouTube"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/>
+        <path d="m10 15 5-3-5-3z"/>
+      </svg>
+      <span>Inscreva-se</span>
+    </a>
   </nav>
 </header>

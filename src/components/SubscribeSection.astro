@@ -1,0 +1,28 @@
+---
+import { YOUTUBE_URL, MAIN_SITE_URL, AUTHOR, SITE_DESCRIPTION } from '../consts';
+---
+<section class="subscribe-section" aria-labelledby="subscribe-title">
+  <img class="subscribe-bg" src="/posters/blockchain.jpg" alt="" aria-hidden="true" loading="lazy" />
+  <div class="subscribe-shade" aria-hidden="true"></div>
+  <div class="subscribe-inner">
+    <p class="kicker" data-reveal>Inscrição</p>
+    <h2 class="subscribe-title" id="subscribe-title" data-reveal>
+      Fique por <span class="gold">dentro</span>
+    </h2>
+    <p class="subscribe-desc" data-reveal>
+      Novos posts, análises e bastidores do canal direto no seu feed. Assine o canal no
+      YouTube, acompanhe o site oficial ou receba tudo via RSS.
+    </p>
+    <div class="subscribe-actions" data-reveal>
+      <a class="btn btn--accent" href={YOUTUBE_URL} target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/>
+          <path d="m10 15 5-3-5-3z"/>
+        </svg>
+        Inscrever-se no YouTube
+      </a>
+      <a class="btn btn--ghost" href="/rss.xml">Feed RSS</a>
+      <a class="btn btn--ghost" href={MAIN_SITE_URL} target="_blank" rel="noopener">Site oficial</a>
+    </div>
+  </div>
+</section>

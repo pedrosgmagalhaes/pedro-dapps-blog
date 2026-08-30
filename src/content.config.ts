@@ -11,6 +11,8 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     // ID do vídeo do YouTube (embed opcional no topo do post)
     youtubeId: z.string().optional(),
+    // Imagem de capa (caminho em /public, ex.: '/posters/ia.jpg')
+    cover: z.string().optional(),
   }),
 });
 

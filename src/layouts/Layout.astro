@@ -1,7 +1,8 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Preloader from '../components/Preloader.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, TAGLINE_WORDS } from '../consts';
 import '../styles/global.css';
 
 interface Props {
@@ -16,33 +17,90 @@ const pageDescription = description ?? SITE_DESCRIPTION;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL(ogImage ?? '/og-thumbnail.png', Astro.site);
 ---
-
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+    <meta name="author" content={AUTHOR} />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title="Pedro dApps — Blog" href="/rss.xml" />
 
+    <meta name="theme-color" content="#080808" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+
+    <!-- Favicons (identidade do site oficial) -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/images/apple-touch-icon-167x167.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Pedro dApps" />
+
+    <!-- Preload de fontes e imagem do hero -->
+    <link rel="preload" href="/posters/intro.jpg" as="image" fetchpriority="high" />
+    <link rel="preload" href="/fonts/playfair-display-variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/anton-v27-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.youtube.com" />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Pedro dApps" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#080808" />
+    <meta name="twitter:site" content="@pedro_dapps" />
+    <meta name="twitter:creator" content="@pedro_dapps" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- GSAP local (igual ao site oficial) -->
+    <script src="/vendor/gsap.min.js" defer></script>
+    <script is:inline define:vars={{ taglineWords: TAGLINE_WORDS }}>
+      window.BLOG_TAGLINE_WORDS = taglineWords;
+    </script>
   </head>
-  <body>
+  <body class="is-loading">
+    <Preloader />
     <Header />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <script>import '../scripts/blog.js';</script>
+    <noscript>
+      <style>
+        .preloader,
+        .wipe-edge {
+          display: none !important;
+        }
+        body.is-loading {
+          overflow: auto !important;
+        }
+        [data-reveal] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
   </body>
 </html>
