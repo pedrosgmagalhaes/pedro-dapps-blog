@@ -12,8 +12,9 @@
    3. Corrige canonical / og:url / og:image / sitemap para /blog.
    ============================================================ */
 
-// ORIGEM do blog — aponta para o subdomínio definitivo (após custom domain no Railway).
-const ORIGIN = 'https://blog.pedrodapps.com';
+// ORIGEM do blog — URL de produção do Railway.
+// Pode trocar para https://blog.pedrodapps.com após o custom domain ser validado.
+const ORIGIN = 'https://pedro-dapps-blog-production.up.railway.app';
 
 const PREFIX = '/blog';
 const SITE_ROOT = 'https://pedrodapps.com';
