@@ -520,6 +520,7 @@ A sequência que funciona para ensinar — e que serve tanto para uma IP brasile
 - [SPI, DICT e Conta PI — a infraestrutura do PIX (Azify)](https://azify.com/blog/spi-dict-conta-pi-infraestrutura-pix)
 - [open-pix — documentação prática de homologação de participante (GitHub)](https://github.com/cleitonsilvadev/open-pix)
 - [Bibliotecas BR Code: pybrcode (Python), gpix (Node.js), php_qrcode_pix (PHP)](https://github.com/topics/pix?l=python)
+- [pix-engenharia-reversa — laboratório didático e esqueleto de stack deste artigo (GitHub, MIT)](https://github.com/pedrosgmagalhaes/pix-engenharia-reversa)
 
 **Internacionalização e blueprint global:**
 
@@ -532,3 +533,18 @@ A sequência que funciona para ensinar — e que serve tanto para uma IP brasile
 ---
 
 *Artigo educativo — informações consolidadas em setembro de 2026. Versões de manuais e APIs mudam com frequência; confirme sempre o documento vigente na página oficial do Banco Central antes de implementar. As ilustrações foram geradas por IA no padrão editorial do blog e têm finalidade conceitual.*
+
+---
+
+## Sobre o autor
+
+Eu sou o **Pedro Magalhães** — desenvolvedor e criador do canal **Pedro dApps**, onde
+explico IA, blockchain e engenharia de software de forma prática e didática. Este guia
+é um bem público: fique à vontade para estudar, compartilhar e evoluir. Se quiser
+trocar uma ideia sobre pagamentos, arquitetura ou tecnologia:
+
+- GitHub: [github.com/pedrosgmagalhaes](https://github.com/pedrosgmagalhaes) — incluindo o laboratório [pix-engenharia-reversa](https://github.com/pedrosgmagalhaes/pix-engenharia-reversa) usado neste artigo
+- X / Twitter: [@pedro_dapps](https://x.com/pedro_dapps)
+- YouTube: [youtube.com/@pedro_dapps](https://www.youtube.com/@pedro_dapps)
+- Site: [pedrodapps.com](https://pedrodapps.com)
+- E-mail: [pedro@pedrodapps.com](mailto:pedro@pedrodapps.com)
