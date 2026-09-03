@@ -4,6 +4,7 @@ description: "Um grupo de 21 instituições financeiras — Goldman Sachs, Bank 
 pubDate: 2026-09-02
 tags: ["blockchain", "cripto", "finanças", "stablecoins"]
 cover: "/images/news/consorcio-bancos-stablecoin-dolar-2027.jpg"
+youtubeId: "Y_-C79pwZiA"
 ---
 
 Enquanto o mercado de stablecoins segue dominado pela Tether, os grandes bancos decidiram atacar o problema **em bloco**: um grupo de **21 instituições financeiras** — incluindo **Goldman Sachs, Bank of America, Citi e Deutsche Bank** — anunciou que vai criar uma empresa ainda em 2026 para emitir uma criptomoeda atrelada ao **dólar** no primeiro semestre de **2027**.

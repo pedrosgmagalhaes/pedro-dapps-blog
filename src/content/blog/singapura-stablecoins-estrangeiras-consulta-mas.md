@@ -4,6 +4,7 @@ description: "O MAS quer permitir que stablecoins emitidas no exterior sob regra
 pubDate: 2026-09-01
 tags: ["blockchain", "regulação", "stablecoins"]
 cover: "/images/news/singapura-stablecoins-estrangeiras-consulta-mas.jpg"
+youtubeId: "6M_9NnOJA5Y"
 ---
 
 O banco central de Singapura, o **Monetary Authority of Singapore (MAS)**, publicou em 1º de setembro um documento de consulta com mudanças legislativas no quadro regulatório de stablecoins — e a proposta mais ousada inverte uma posição que a autoridade mantinha desde 2023.

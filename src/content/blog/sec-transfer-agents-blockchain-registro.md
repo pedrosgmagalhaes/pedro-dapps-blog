@@ -4,6 +4,7 @@ description: "Primeira grande atualização em décadas das regras de transfer a
 pubDate: 2026-09-01
 tags: ["blockchain", "regulação", "sec", "tokenização"]
 cover: "/images/news/sec-transfer-agents-blockchain-registro.jpg"
+youtubeId: "x1A5Xyqe0EE"
 ---
 
 A **SEC** (Comissão de Valores Mobiliários dos EUA) propôs nesta terça-feira uma reforma abrangente das regras que regem os **transfer agents** registrados — as empresas responsáveis por manter o registro de quem é dono de cada título e por movimentar esses papéis entre investidores. É a primeira grande atualização do marco regulatório em décadas, e o texto abre espaço explícito para o **registro em blockchain** e para a **tokenização de valores mobiliários**.

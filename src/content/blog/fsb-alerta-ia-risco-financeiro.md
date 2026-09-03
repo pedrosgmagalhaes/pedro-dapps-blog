@@ -4,6 +4,7 @@ description: "Andrew Bailey, chair do Financial Stability Board, enviou carta ao
 pubDate: 2026-09-01
 tags: ["ia", "segurança", "regulação", "finanças"]
 cover: "/images/news/fsb-alerta-ia-risco-financeiro.jpg"
+youtubeId: "WN7Tdk7B8kU"
 ---
 
 O principal órgão de estabilidade financeira do mundo colocou a inteligência artificial no topo da lista de preocupações. Em carta enviada nesta segunda-feira (31) aos ministros de finanças e presidentes de bancos centrais do G20, **Andrew Bailey**, chair do Financial Stability Board (FSB) e governador do Banco da Inglaterra, afirmou que o potencial de modelos de IA avançados conduzirem ciberataques representa a "preocupação mais imediata" para uma rede financeira global altamente interconectada.
