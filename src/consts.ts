@@ -16,6 +16,10 @@ export const VAPID_PUBLIC_KEY =
 // Remetente das notificações por e-mail
 export const NOTIFY_EMAIL = 'noticias@pedrodapps.com';
 
+// Google Analytics 4 — Measurement ID do stream deste site
+// Propriedade: "Pedro dApps — Sites e Cursos" · Stream: Blog (blog.pedrodapps.com)
+export const GA_MEASUREMENT_ID = 'G-SNM480VFH8';
+
 // ID de um vídeo real do canal para o "vídeo em destaque" (vazio = bloco oculto).
 // Pegue o ID na URL do YouTube: https://www.youtube.com/watch?v=XXXX
 export const FEATURED_YOUTUBE_ID = '';
