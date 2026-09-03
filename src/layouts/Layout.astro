@@ -210,5 +210,108 @@ const ogHeight = ogImageHeight ?? (ogImage ? 630 : 670);
         }
       })();
     </script>
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         Funil & eventos (GA4) · Pedro dApps — Blog
+         view_item (post), view_item_list (home/tags), content_read (75%),
+         select_content (vídeos/CTAs/links internos). Só dispara após
+         consentimento analytics_storage=granted (Consent Mode v2 / LGPD).
+         Especificação: docs/Google Analytics 4 - Central de Medição.md
+         ══════════════════════════════════════════════════════════════════ -->
+    <script is:inline>
+      (function () {
+        var KEY = 'pd_consent_v1';
+        function hasConsent() {
+          try { return localStorage.getItem(KEY) === 'granted'; } catch (e) { return false; }
+        }
+        function send(name, params) {
+          if (!hasConsent()) return;
+          try { gtag('event', name, params || {}); } catch (e) {}
+        }
+        window.pdTrack = send;
+
+        var path = location.pathname.replace(/\/+$/, '') || '/';
+        function hostOnly(href) { try { return new URL(href, location.origin).hostname.replace(/^www\./, ''); } catch (e) { return ''; } }
+        function pathOnly(href) { try { return new URL(href, location.origin).pathname.replace(/\/+$/, '') || '/'; } catch (e) { return href || ''; } }
+
+        /* 1) view_item no artigo + leitura até 75% */
+        var article = document.querySelector('article.post');
+        if (article) {
+          var titleEl = article.querySelector('.post-title');
+          var postTitle = titleEl ? titleEl.textContent.trim() : (document.title.replace(/\s*[—|-].*$/, '').trim());
+          var item = { item_id: path, item_name: postTitle, item_category: 'Blog' };
+          if (hasConsent()) {
+            try { gtag('event', 'view_item', { currency: 'BRL', value: 0, items: [item] }); } catch (e) {}
+          }
+          var sentRead = false;
+          function maybeRead() {
+            if (sentRead) return;
+            var doc = document.documentElement;
+            var max = Math.max(doc.scrollHeight - window.innerHeight - 120, 1);
+            if (window.scrollY / max >= 0.72) {
+              sentRead = true;
+              send('content_read', { content_type: 'post', post_title: postTitle, post_path: path });
+              window.removeEventListener('scroll', onScroll);
+            }
+          }
+          function onScroll() { maybeRead(); }
+          window.addEventListener('scroll', onScroll, { passive: true });
+          setTimeout(maybeRead, 9000); /* fallback para leitores rápidos */
+        }
+
+        /* 2) view_item_list (home e tags) quando a lista aparece */
+        var list = document.querySelector('ol.post-list');
+        if (list) {
+          var listName = path.indexOf('/tags/') === 0 ? 'Tag ' + decodeURIComponent(path.split('/').pop() || '') : (path === '/' ? 'Últimos posts' : path);
+          function fireList() {
+            var links = list.querySelectorAll('.post-link');
+            var items = [];
+            for (var i = 0; i < Math.min(links.length, 20); i++) {
+              var t = links[i].querySelector('.post-title');
+              items.push({ item_id: pathOnly(links[i].getAttribute('href') || ''), item_name: t ? t.textContent.trim() : '', item_category: 'Blog' });
+            }
+            send('view_item_list', { item_list_name: listName, items: items });
+          }
+          if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+              for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) { io.disconnect(); fireList(); }
+              }
+            }, { threshold: 0.15 });
+            io.observe(list);
+          } else { setTimeout(fireList, 1200); }
+        }
+
+        /* 3) Erro 404 rastreável */
+        if (/404|erro 404/i.test(document.title) || path === '/404') {
+          setTimeout(function () { send('page_error', { page_location: location.pathname + location.search }); }, 800);
+        }
+
+        /* 4) Clicks ricos */
+        document.addEventListener('click', function (e) {
+          var t = e.target && e.target.closest ? e.target.closest('a') : null;
+          if (!t || !t.href) return;
+          var p = { link_url: hostOnly(t.href) + pathOnly(t.href) };
+          if (t.classList.contains('video-card')) {
+            p.content_type = 'youtube_video';
+            var vt = t.querySelector('.video-title');
+            p.link_text = vt ? vt.textContent.trim() : '';
+            send('select_content', p);
+          } else if (t.closest('.channel-actions')) {
+            p.content_type = 'youtube_channel';
+            p.link_text = t.textContent.trim();
+            send('select_content', p);
+          } else if (t.closest('.post-cta')) {
+            p.content_type = 'subscribe_cta';
+            p.link_text = t.textContent.trim().replace(/\s+/g, ' ').slice(0, 80);
+            send('select_content', p);
+          } else if (t.closest('.prose') && hostOnly(t.href) === hostOnly(location.href)) {
+            p.content_type = 'post_internal_link';
+            p.link_text = t.textContent.trim().replace(/\s+/g, ' ').slice(0, 120);
+            send('select_content', p);
+          }
+        }, true);
+      })();
+    </script>
   </body>
 </html>
