@@ -250,6 +250,7 @@ Para conferir seu parser (ou pular a implementação), existe um ecossistema abe
 - **Rust:** `pix-brcode-parser` (parser + validação);
 - **Online:** decoders de BR Code e o endpoint de decode da Woovi, úteis para conferir campo a campo;
 - **Repositórios de homologação:** projetos como `open-pix` documentam, na prática, o que um participante direto precisa implementar (conexão ICOM/mTLS e mensagens `pacs.008/002/004`) — o que transforma o processo do BCB em algo estudável fora do BCB.
+- **Laboratório público deste artigo:** criei o repositório [pix-engenharia-reversa](https://github.com/pedrosgmagalhaes/pix-engenharia-reversa) com este parser em Python, um mini-DICT/mini-SPI testado e o esqueleto/blueprint da stack de produção — para você rodar e evoluir.
 
 ### 2.5 O laboratório: um mini-DICT e um mini-SPI
 
