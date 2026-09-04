@@ -39,6 +39,6 @@ A troca de cartas acontece enquanto o Legislativo americano avalia um projeto so
 
 ## O que observar
 
-A novidade aqui não é a promessa de "botão de desligamento" — empresas de IA falam nisso há anos. O relevante é o **movimento em duas frentes ao mesmo tempo**: a OpenAI descrevendo um mecanismo técnico concreto (alertas em camadas, pausa em 30 minutos, desligamento autônomo) enquanto o Congresso tenta transformar isso em lei. Se o AI Kill Switch Act avançar, desligar um modelo deixa de ser decisão interna de laboratório e vira obrigação legal com supervisão do governo.
+A novidade aqui não é a promessa de "botão de desligamento" — empresas de IA falam nisso há anos. O relevante é o **movimento em duas frentes ao mesmo tempo**: a OpenAI descrevendo um mecanismo técnico concreto (alertas em camadas, pausa em 30 minutos, desligamento autônomo) enquanto o Congresso dos EUA tenta transformar isso em lei. Se o AI Kill Switch Act avançar, desligar um modelo deixa de ser decisão interna de laboratório e vira obrigação legal com supervisão do governo.
 
 > Fonte: [Reuters, via Unite.AI](https://www.unite.ai/openai-tells-house-democrats-it-is-building-automated-shutdown-capability/)
