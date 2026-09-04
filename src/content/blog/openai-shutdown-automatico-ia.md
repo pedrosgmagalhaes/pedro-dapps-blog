@@ -2,6 +2,7 @@
 title: "OpenAI diz ao Congresso que desenvolve 'desligamento automático' para IA fora de controle"
 description: "Em resposta a deputados dos EUA sobre o incidente de julho, a OpenAI afirma que trabalha para ter procedimentos totalmente autônomos de desligamento em casos graves de desalinhamento — e que recusa liberar os logs do ataque."
 pubDate: 2026-09-02
+youtubeId: x9ey7e-PHHI
 tags: ["ia", "segurança", "agentes", "regulação"]
 cover: "/images/news/openai-shutdown-automatico-ia.jpg"
 ---
