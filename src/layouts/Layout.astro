@@ -2,7 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Preloader from '../components/Preloader.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, TAGLINE_WORDS, NEWSLETTER_API, VAPID_PUBLIC_KEY, GA_MEASUREMENT_ID } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, TAGLINE_WORDS, NEWSLETTER_API, VAPID_PUBLIC_KEY, GA_MEASUREMENT_ID, LISTMONK_URL, LIST_UUID_NEWSLETTER } from '../consts';
 import '../styles/global.css';
 
 interface Props {
@@ -132,8 +132,10 @@ const ogHeight = ogImageHeight ?? (ogImage ? 630 : 670);
     </main>
     <Footer />
     <script>import '../scripts/blog.js';</script>
-    <script is:inline define:vars={{ newsletterApi: NEWSLETTER_API, vapidPublicKey: VAPID_PUBLIC_KEY }}>
+    <script is:inline define:vars={{ newsletterApi: NEWSLETTER_API, vapidPublicKey: VAPID_PUBLIC_KEY, listmonkUrl: LISTMONK_URL, listUuid: LIST_UUID_NEWSLETTER }}>
       window.NEWSLETTER_API = newsletterApi;
+      window.LISTMONK_URL = listmonkUrl;
+      window.LIST_UUID_NEWSLETTER = listUuid;
       window.VAPID_PUBLIC_KEY = vapidPublicKey;
     </script>
     <script>import '../scripts/subscribe.js';</script>

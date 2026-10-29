@@ -44,7 +44,7 @@ import { YOUTUBE_URL, MAIN_SITE_URL } from '../consts';
         </span>
         <div class="notify-body">
           <h3 class="notify-title">Newsletter por e-mail</h3>
-          <p class="notify-desc">Os posts mais recentes na sua caixa de entrada.</p>
+          <p class="notify-desc">Uma vez por semana: o vídeo novo, os posts do blog e o que mudou em dinheiro digital. Você confirma pelo e-mail.</p>
           <form class="newsletter-form" data-newsletter-form novalidate>
             <input
               type="email"
@@ -55,6 +55,10 @@ import { YOUTUBE_URL, MAIN_SITE_URL } from '../consts';
               required
             />
             <button class="btn btn--accent" type="submit">Assinar</button>
+            <label class="newsletter-consent">
+              <input type="checkbox" name="consent" required data-newsletter-consent />
+              <span>Quero receber a newsletter Negócios sem fronteira (com ofertas dos projetos do Pedro) e li a <a href={`${MAIN_SITE_URL}/#privacidade`} target="_blank" rel="noopener">Política de Privacidade</a>.</span>
+            </label>
           </form>
           <p class="form-message" data-newsletter-message aria-live="polite"></p>
         </div>
@@ -74,7 +78,14 @@ import { YOUTUBE_URL, MAIN_SITE_URL } from '../consts';
     </div>
 
     <p class="subscribe-foot" data-reveal>
-      Sem spam. Cancele quando quiser — <a href="#" data-newsletter-unsubscribe>cancelar inscrição por e-mail</a>.
+      Sem spam. Para sair, use o link no fim de qualquer e-mail da newsletter.
     </p>
   </div>
 </section>
+
+<style>
+  .newsletter-consent { display: flex; gap: 0.5rem; align-items: flex-start; flex-basis: 100%; margin-top: 0.6rem; font-size: 0.8rem; line-height: 1.4; opacity: 0.8; text-align: left; }
+  .newsletter-form { flex-wrap: wrap; }
+  .newsletter-consent input { margin-top: 0.15rem; accent-color: #c89b52; flex: none; width: 16px; height: 16px; padding: 0; border-radius: 3px; }
+  .newsletter-consent a { color: #d8b36e; }
+</style>

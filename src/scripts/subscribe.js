@@ -123,48 +123,86 @@
     }
   }
 
-  /* ---------- Newsletter por e-mail ---------- */
+  /* ---------- Origem da visita (UTM), igual ao pedrodapps.com ---------- */
+  const FIRST = 'pd.attr.first';
+  const LAST = 'pd.attr.last';
+  const readJson = (k) => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } };
+  const writeJson = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* sem armazenamento */ } };
+  (() => {
+    const q = new URLSearchParams(location.search);
+    const touch = {};
+    for (const k of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
+      const v = q.get(k);
+      if (v) touch[k] = v.slice(0, 120);
+    }
+    try {
+      const host = document.referrer ? new URL(document.referrer).hostname : '';
+      if (host && host !== location.hostname) touch.referrer = host;
+    } catch { /* referência inválida */ }
+    if (!Object.keys(touch).length) return;
+    touch.landing = location.pathname;
+    touch.at = new Date().toISOString();
+    if (!readJson(FIRST)) writeJson(FIRST, touch);
+    writeJson(LAST, touch);
+  })();
+  const attribution = () => {
+    const out = {};
+    for (const [prefix, t] of [['first', readJson(FIRST)], ['last', readJson(LAST)]]) {
+      if (!t) continue;
+      for (const [k, v] of Object.entries(t)) if (v) out[`${prefix}_${k}`] = String(v);
+    }
+    return out;
+  };
+
+  /* ---------- Newsletter por e-mail (Listmonk, confirmação dupla) ---------- */
+  const LISTMONK = typeof window.LISTMONK_URL === 'string' ? window.LISTMONK_URL : '';
+  const LIST_UUID = typeof window.LIST_UUID_NEWSLETTER === 'string' ? window.LIST_UUID_NEWSLETTER : '';
   if (emailForm && emailInput) {
     emailForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!API) {
+      if (!LISTMONK || !LIST_UUID || LIST_UUID.startsWith('__')) {
         setEmailMessage('error', 'Serviço de inscrição indisponível no momento.');
         return;
       }
       const email = emailInput.value.trim().toLowerCase();
-      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
-      if (!emailOk) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
         setEmailMessage('error', 'Informe um e-mail válido.');
         return;
       }
-      const name =
-        emailForm.querySelector('[data-newsletter-name]')?.value.trim() || '';
+      const consent = emailForm.querySelector('[data-newsletter-consent]');
+      if (consent && !consent.checked) {
+        setEmailMessage('error', 'Marque a caixa de consentimento para continuar.');
+        return;
+      }
       const submitBtn = emailForm.querySelector('button[type="submit"]');
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = 'Enviando…';
       }
       try {
-        const res = await fetch(`${API}/api/subscribe`, {
+        const res = await fetch(`${LISTMONK}/api/public/subscription`, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ email, name }),
+          body: JSON.stringify({
+            email,
+            name: email.split('@')[0],
+            list_uuids: [LIST_UUID],
+            attribs: {
+              consent_at: new Date().toISOString(),
+              consent_version: '2026-10-v2',
+              consent_source: location.origin + location.pathname,
+              source: 'blog.pedrodapps.com',
+              lang: 'pt',
+              ...attribution(),
+            },
+          }),
         });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok) {
-          setEmailMessage('ok', 'Inscrição confirmada! Você receberá os próximos posts no e-mail.');
-          emailInput.value = '';
-          emailForm.querySelector('[data-newsletter-name]').value = '';
-        } else {
-          setEmailMessage(
-            'error',
-            data.error && data.error.includes('já')
-              ? 'Este e-mail já está inscrito. 😉'
-              : 'Não foi possível inscrever. Tente novamente em instantes.',
-          );
-        }
+        if (!res.ok) throw new Error(String(res.status));
+        setEmailMessage('ok', 'Quase lá! Confira seu e-mail e confirme a inscrição.');
+        emailForm.reset();
+        try { if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'newsletter', form_location: 'blog' }); } catch { /* sem GA */ }
       } catch (err) {
-        setEmailMessage('error', 'Erro de conexão. Tente novamente em instantes.');
+        setEmailMessage('error', 'Não foi possível inscrever agora. Tente novamente em instantes.');
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -173,23 +211,4 @@
       }
     });
   }
-
-  /* ---------- Rodapé da newsletter: link de cancelamento ---------- */
-  document.querySelectorAll('[data-newsletter-unsubscribe]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const email = prompt('Digite o e-mail que deseja cancelar:');
-      if (!email) return;
-      fetch(`${API}/api/unsubscribe`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          alert(data.ok ? 'E-mail removido da lista.' : 'E-mail não encontrado.');
-        })
-        .catch(() => alert('Erro de conexão. Tente novamente.'));
-    });
-  });
 })();
