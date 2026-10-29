@@ -156,6 +156,7 @@
 
   /* ---------- Newsletter por e-mail (Listmonk, confirmação dupla) ---------- */
   const LISTMONK = typeof window.LISTMONK_URL === 'string' ? window.LISTMONK_URL : '';
+  const ATTRIB_URL = 'https://newsletter-attrib-production.up.railway.app/attrib';
   const LIST_UUID = typeof window.LIST_UUID_NEWSLETTER === 'string' ? window.LIST_UUID_NEWSLETTER : '';
   if (emailForm && emailInput) {
     emailForm.addEventListener('submit', async (event) => {
@@ -180,24 +181,30 @@
         submitBtn.textContent = 'Enviando…';
       }
       try {
+        const attribs = {
+          consent_at: new Date().toISOString(),
+          consent_version: '2026-10-v2',
+          consent_source: location.origin + location.pathname,
+          source: 'blog.pedrodapps.com',
+          lang: 'pt',
+          ...attribution(),
+        };
         const res = await fetch(`${LISTMONK}/api/public/subscription`, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            name: email.split('@')[0],
-            list_uuids: [LIST_UUID],
-            attribs: {
-              consent_at: new Date().toISOString(),
-              consent_version: '2026-10-v2',
-              consent_source: location.origin + location.pathname,
-              source: 'blog.pedrodapps.com',
-              lang: 'pt',
-              ...attribution(),
-            },
-          }),
+          body: JSON.stringify({ email, name: email.split('@')[0], list_uuids: [LIST_UUID], attribs }),
         });
         if (!res.ok) throw new Error(String(res.status));
+        // A inscrição pública do Listmonk descarta attribs: origem e consentimento vão pelo
+        // serviço newsletter-attrib (o mesmo do pedrodapps.com).
+        try {
+          fetch(ATTRIB_URL, {
+            method: 'POST',
+            keepalive: true,
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ email, attribs }),
+          }).catch(() => {});
+        } catch { /* origem é melhor esforço */ }
         setEmailMessage('ok', 'Quase lá! Confira seu e-mail e confirme a inscrição.');
         emailForm.reset();
         try { if (typeof gtag === 'function') gtag('event', 'sign_up', { method: 'newsletter', form_location: 'blog' }); } catch { /* sem GA */ }
