@@ -8,7 +8,11 @@ export const GITHUB_URL = 'https://github.com/pedrosgmagalhaes';
 export const TWITTER_URL = 'https://x.com/pedro_dapps';
 export const EMAIL = 'pedro@pedrodapps.com';
 
-// API de notificações (Worker do Cloudflare + D1)
+// Newsletter por e-mail: Listmonk do Pedro dApps (o mesmo do pedrodapps.com), lista com confirmação dupla.
+export const LISTMONK_URL = 'https://listmonk-production-5c76.up.railway.app';
+export const LIST_UUID_NEWSLETTER = '568fc353-25d7-43f2-8f66-90445a4dd88b';
+
+// API de notificações push (Worker do Cloudflare + D1). O e-mail saiu daqui e foi para o Listmonk.
 export const NEWSLETTER_API = 'https://blog-api.pedrodapps.com';
 // Chave pública VAPID para Web Push (a privada fica como secret no Worker)
 export const VAPID_PUBLIC_KEY =
