@@ -130,3 +130,5 @@ O repositório traz `railway.json` (Nixpacks + `npm start` servindo `dist/`).
 
 Design derivado do site oficial do canal (`../Website/`) — fontes, grão, logo, favicons e
 linguagem de animação reutilizadas.
+
+
