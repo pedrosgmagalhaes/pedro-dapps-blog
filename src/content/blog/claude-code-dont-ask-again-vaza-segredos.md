@@ -3,7 +3,7 @@ title: "Claude Code grava sua senha no repositório: 1.122 arquivos públicos no
 description: "A Apiiro varreu o GitHub e achou 1.122 cópias públicas do .claude/settings.local.json com senha, token ou chave de verdade — 2.539 segredos no total, em 1.994 repositórios e 63 organizações. O gatilho é o botão \"Yes, and don't ask again\"."
 pubDate: 2026-11-08
 tags: ["segurança", "dev", "ia", "ferramentas"]
-cover: "/images/news/claude-code-dont-ask-again-vaza-segredos.jpg"
+cover: "/images/news/claude-code-dont-ask-again-vaza-segredos.jpg?v=2"
 ---
 
 Existe um botão no **Claude Code** que todo mundo já clicou. Ele aparece quando o agente pede para rodar um comando de terminal, e a opção é **"Yes, and don't ask again"** — sim, e não pergunte de novo. O que a maioria não sabe é o que ele salva: muitas vezes, o comando inteiro, incluindo a senha que estava dentro dele.
